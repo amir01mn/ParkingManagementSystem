@@ -372,7 +372,7 @@ public class UserTest {
 	}
 
 	@Test
-	public void testUserPropertyCombinations() {
+        public void testUserPropertyCombinations() {
 		// Test setting all properties with edge case values
 		String edgeCaseName = "John O'Connor-Smith 123";
 		String edgeCaseEmail = "john.123@sub.example.com";
@@ -389,8 +389,16 @@ public class UserTest {
 		assertEquals(edgeCaseName, user.getName(), "Edge case name should be preserved");
 		assertEquals(edgeCaseEmail, user.getEmail(), "Edge case email should be preserved");
 		assertEquals(edgeCasePassword, user.getPassword(), "Edge case password should be preserved");
-		assertEquals(edgeCaseType, user.getType(), "Edge case type should be preserved");
-		assertEquals(edgeCaseID, user.getUserID(), "Edge case ID should be preserved");
-	}
+                assertEquals(edgeCaseType, user.getType(), "Edge case type should be preserved");
+                assertEquals(edgeCaseID, user.getUserID(), "Edge case ID should be preserved");
+        }
+
+        @Test
+        public void testSetHashedPassword() {
+                AuthenticationService auth = new AuthenticationService(new UserDatabaseHelper());
+                String hashed = auth.hashPassword("Test123!");
+                user.setPassword(hashed);
+                assertEquals(hashed, user.getPassword());
+        }
 
 }
