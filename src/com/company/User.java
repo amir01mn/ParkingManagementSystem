@@ -80,12 +80,18 @@ public class User {
     }
 
     public void setPassword(String password) {
+        if (password == null) {
+            System.out.println("Password cannot be null");
+            return;
+        }
 
-        if (StrongPasswordRecognizer.isPasswordStrong(password))
+        boolean isHashed = password.matches("^[0-9a-fA-F]{96}$");
+
+        if (isHashed || StrongPasswordRecognizer.isPasswordStrong(password)) {
             this.password = password;
-            
-        else
-            System.out.println("Password is not strong enough");    
+        } else {
+            System.out.println("Password is not strong enough");
+        }
     }
 
     public void setName(String name) {
